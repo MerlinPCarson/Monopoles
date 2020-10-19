@@ -102,12 +102,13 @@ def show_results(solution):
     if solution is None:
         print('unsat')
     else:
-        print('Solution:')
-        for key in solution.keys():
-            solution[key] = sorted(solution[key])
+        print('\nSolution:\n')
+        for i, key in enumerate(solution.keys()):
+            print(f'Room {chr(i+65)}:', end=' ')
             for value in solution[key]:
                 print(value, end=' ')
             print()
+    print()
 
 def main():
     start = time.time()
