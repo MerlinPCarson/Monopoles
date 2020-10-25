@@ -1,8 +1,6 @@
 # Monopoles
-Solver for Dr. Ecco's Monopole challenge from Dr. Dobb's Journel Of Computer Calisthenics and Orthodontia September 01, 1999
-
-by Merlin Carson
-
+Solver for Dr. Ecco's Monopole challenge from Dr. Dobb's Journel Of Computer Calisthenics and Orthodontia September 01, 1999  
+by Merlin Carson  
 written using Python3
 
 
@@ -22,4 +20,4 @@ All experiements were conduction on a Dell 3400 Latitude laptop with a 2.3 GHz i
 
 53 monopoles were placed in 4 rooms in ~0.1 secs
 
-54 monopoles were placed in 4 rooms in ~8 mins
+54 monopoles were placed in 4 rooms in ~8.5 mins
