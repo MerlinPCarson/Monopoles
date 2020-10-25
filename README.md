@@ -1,6 +1,9 @@
 # Monopoles
 Solver for Dr. Ecco's Monopole challenge from Dr. Dobb's Journel Of Computer Calisthenics and Orthodontia September 01, 1999
+
 by Merlin Carson
+
+written using Python3
 
 
 # Usage
