@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-# Monopole solver for Dr. Ecco challenege
+# Monopole DFS solver for Dr. Ecco challenege
 # by Merlin Carson
 
 import sys
 import time
 
 
+# verifies and returns correct number of comman line arguments
 def parse_args(args):
 
-    if len(args) < 3 or int(sys.argv[1]) > 52:
+    if len(args) < 3:
         sys.exit("Usage: ./mono.py <num monopoles (<=52)> <num rooms>")
 
     return int(sys.argv[1]), int(sys.argv[2])
 
+# Monopole constraining X + Y = Z
 def is_additive(x, y, z):
 
     if (x + y == z):
@@ -20,6 +22,7 @@ def is_additive(x, y, z):
 
     return False
 
+# Monopole constraining, no room contains two monopoles that sum to a third
 def place_mono(cur_monos, new_mono):
 
     # base case, not enough monopoles in room to be additive
@@ -32,6 +35,7 @@ def place_mono(cur_monos, new_mono):
                 return False
     return True
 
+# verifies solution contains all monopoles 
 def verify_all_monos(solution, num_monos):
     
     for mono in range(1, num_monos+1):
@@ -43,11 +47,11 @@ def verify_all_monos(solution, num_monos):
 
     return True
 
+# verifies solution adhears to constraints
 def verify_solution(solution, num_monos):
 
     # check to make sure all monopoles have been placed in rooms
     if not verify_all_monos(solution, num_monos):
-        print('[Invalid Solution]: not all monopoles placed in rooms!')
         return None
 
     for key in solution.keys():
@@ -60,12 +64,11 @@ def verify_solution(solution, num_monos):
             for y in solution[key][i+1:-1]:
                 for z in solution[key][i+2:]:
                     if is_additive(x, y, z) is True:
-                        print(f'[Invalid Solution]: additive monopole combination found in room {key}!')
                         return None
 
-    print('Solution verified.')
     return solution
 
+# Helper function for staring DFS recursion
 def solver(num_monos, num_rooms):
 
     # lists of all possible monopoles and rooms
@@ -78,7 +81,7 @@ def solver(num_monos, num_rooms):
 
     return solve(monos, monos.pop(0), rooms, solution)
 
-
+# Depth First Search with constraint function place_mono
 def solve(monos, mono, rooms, solution):
 
     # base case
@@ -102,28 +105,24 @@ def show_results(solution):
     if solution is None:
         print('unsat')
     else:
-        print('\nSolution:\n')
         for i, key in enumerate(solution.keys()):
-            print(f'Room {chr(i+65)}:', end=' ')
             for value in solution[key]:
                 print(value, end=' ')
             print()
-    print()
 
 def main():
-    start = time.time()
 
+    # verify and load correct number of command line arguments
     num_monos, num_rooms = parse_args(sys.argv)
-    print(f'Solving for {num_monos} monopoles in {num_rooms} rooms.')
 
+    # find solution to monopole problem using DFS
     solution = solver(num_monos, num_rooms)
 
-    print(f'Solution found in {time.time()-start:.8f} secs.')
-
+    # verify the solution is correct
     solution = verify_solution(solution, num_monos)
-    show_results(solution)
 
-    print(f'Script completed in {time.time()-start:.8f} secs.')
+    # print results to screen
+    show_results(solution)
 
     return 0
 
