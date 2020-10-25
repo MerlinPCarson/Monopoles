@@ -4,7 +4,7 @@ by Merlin Carson
 
 
 # Usage
--- ./monodfs \<number of monopoles\> \<number of rooms\>
+./monodfs \<number of monopoles\> \<number of rooms\>
 
 This program uses a depth first search of the state space, placing m monopoles in n rooms with the constraint that no room contains two monopoles whose sum equal another monopole in the same room.
 
