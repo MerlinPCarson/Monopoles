@@ -4,7 +4,7 @@ by Merlin Carson
 
 
 # Usage
--- ./monodfs <number of monopoles> <number of rooms>
+-- ./monodfs \<number of monopoles\> \<number of rooms\>
 
 This program uses a depth first search of the state space, placing m monopoles in n rooms with the constraint that no room contains two monopoles whose sum equal another monopole in the same room.
 
@@ -14,6 +14,9 @@ I first tried filling rooms 1 at a time, moving on to the next room once the con
 All experiements were conduction on a Dell 3400 Latitude laptop with a 2.3 GHz i3 processor.
 
 23 monopoles were placed in 3 rooms in ~0.01 secs
+
 24 monopoles in 3 rooms was determined to be unsatisfiable in ~0.5 secs
+
 53 monopoles were placed in 4 rooms in ~0.1 secs
+
 54 monopoles were placed in 4 rooms in ~8 mins
