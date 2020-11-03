@@ -27,21 +27,29 @@ def is_additive(x, y, z):
     return False
 
 # each monopole is placed
-def constraint1(num_monos, num_rooms):
+def constraint1(num_monos, num_rooms, cnf):
     for m in range(1, num_monos+1):
+        clause = ''
         for n in range(num_rooms):
-            print(f'{L(num_monos, m, n)}', end=' ')
-        print(0)
+            clause += f'{L(num_monos, m, n)} '
+            #print(f'{L(num_monos, m, n)}', end=' ')
+        clause += '0'
+        cnf.append(clause)
+        #print(0)
 
 # no monopoles in 2 places
-def constraint2(num_monos, num_rooms):
+def constraint2(num_monos, num_rooms, cnf):
     for m in range(1, num_monos+1):
+        clause = ''
         for n in range(num_rooms):
-            print(f'-{L(num_monos, m, n)}', end=' ')
-        print(0)
+            clause += f'{L(num_monos, m, n)} '
+            #print(f'-{L(num_monos, m, n)}', end=' ')
+        clause += '0'
+        cnf.append(clause)
+        #print(0)
 
 # sums exclude monopoles
-def constraint3(num_monos, num_rooms):
+def constraint3(num_monos, num_rooms, cnf):
     monos = np.arange(1, num_monos+1)
 
     for n in range(num_rooms):
@@ -49,18 +57,29 @@ def constraint3(num_monos, num_rooms):
             for y in monos[i+1:-1]:
                 for z in monos[i+2:]:
                     if is_additive(x, y, z) is True:
-                        print(f'-{L(num_monos, x, n)} -{L(num_monos, y, n)} -{L(num_monos, z, n)} 0')
+                        cnf.append(f'-{L(num_monos, x, n)} -{L(num_monos, y, n)} -{L(num_monos, z, n)} 0')
+                        #print(f'-{L(num_monos, x, n)} -{L(num_monos, y, n)} -{L(num_monos, z, n)} 0')
 
-def print_cnf_dimax(num_monos, num_rooms):
+def generate_cnf_dimax(num_monos, num_rooms):
+
+    cnf = []
 
     # all monopoles are placed
-    constraint1(num_monos, num_rooms)
+    constraint1(num_monos, num_rooms, cnf)
 
     # no monopoles in 2 places
-    constraint2(num_monos, num_rooms)
+    constraint2(num_monos, num_rooms, cnf)
 
     # sums exclude monopoles
-    constraint3(num_monos, num_rooms)
+    constraint3(num_monos, num_rooms, cnf)
+
+    return cnf
+
+def print_cnf(num_vars, cnf):
+
+    print(f'p cnf {num_vars} {len(cnf)}')
+    for clause in cnf:
+        print(clause)
 
 def main():
 
@@ -68,7 +87,11 @@ def main():
     #num_monos, num_rooms = parse_args(sys.argv)
     num_monos, num_rooms = 8, 2
 
-    print_cnf_dimax(num_monos, num_rooms)
+    num_vars = num_monos * num_rooms
+
+    cnf = generate_cnf_dimax(num_monos, num_rooms)
+
+    print_cnf(num_vars, cnf)
 
     return 0
 
