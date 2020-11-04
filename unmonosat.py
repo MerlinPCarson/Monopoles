@@ -12,13 +12,12 @@ import numpy as np
 def parse_args(args):
 
     if len(args) < 3:
-        sys.exit("Usage: ./mono.py <num monopoles (<=52)> <num rooms> <std input of .soln file>")
+        sys.exit("Usage: ./unmonosat.py <num monopoles> <num rooms> <std input of .soln file>")
 
     return int(sys.argv[1]), int(sys.argv[2]), fileinput.input(sys.argv[3:]) 
 
-def L(num_monos, mono_num, room_num):
-    return num_monos * room_num + mono_num
-
+# decodes CNF dimex into list of rooms and their contents
+# ignores nots and decodes room number and monopole number from variable
 def decode_dimex(num_monos, num_rooms, soln):
     if soln[0].strip() != 'SAT':
         sys.exit('UNSATISFIABLE')
@@ -36,6 +35,7 @@ def decode_dimex(num_monos, num_rooms, soln):
 
     return solution
 
+# displays the final solution
 def show_solution(solution):
     if solution is None:
         print('Invalid solution!!!')
@@ -56,6 +56,7 @@ def verify_solution(solution, num_monos):
     if not verify_no_duplicates(solution, num_monos):
         return None
 
+    # checks to make sure there are no 2 monopoles that sum to a third in a room
     for key in solution.keys():
         # if there are less than 3 monopoles in a room, don't need to check if there is an additive combo
         if len(solution[key]) < 3:
@@ -92,28 +93,25 @@ def verify_no_duplicates(solution, num_monos):
                 mono_cnt += 1
                 if mono_cnt > 1:
                     return False    # duplicate monopole found
+
     # no duplicates found 
     return True
 
-
-
 # Monopole constraining X + Y = Z
 def is_additive(x, y, z):
-
     if (x + y == z):
         return True
-
     return False
 
 def main():
 
     # verify and load correct number of command line arguments
     num_monos, num_rooms, soln = parse_args(sys.argv)
-    #num_monos, num_rooms = 8, 2
 
+    # decode monopole solution from CNF DIMEX solver
     solution = decode_dimex(num_monos, num_rooms, soln)
 
-    # verify solution follows constraints
+    # verify solution adhears to constraints
     solution = verify_solution(solution, num_monos)
 
     # print solution
