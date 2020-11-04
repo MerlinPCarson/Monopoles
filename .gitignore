@@ -1,0 +1,4 @@
+*.sat
+*.soln
+.vscode/
+*.code-workspace
