@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Monopole DFS solver for Dr. Ecco challenege
+# Monopole sat solver CNF DIMEX encoder for Dr. Ecco challenege
 # by Merlin Carson
 
 import sys

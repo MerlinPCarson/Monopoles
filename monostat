@@ -1,0 +1,7 @@
+#!/usr/bin/python3
+# Monopole DFS solver for Dr. Ecco challenege
+# by Merlin Carson
+
+import sys
+import time
+
