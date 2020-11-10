@@ -19,6 +19,7 @@ def parse_args(args):
 # decodes CNF dimex into list of rooms and their contents
 # ignores nots and decodes room number and monopole number from variable
 def decode_dimex(num_monos, num_rooms, soln):
+    soln = list(soln)
     if soln[0].strip() != 'SAT':
         sys.exit('UNSATISFIABLE')
 
