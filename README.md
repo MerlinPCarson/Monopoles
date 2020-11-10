@@ -18,6 +18,4 @@ All experiements were conduction on a Dell 3400 Latitude laptop with a 2.3 GHz i
 
 24 monopoles in 3 rooms was determined to be unsatisfiable in ~0.5 secs
 
-53 monopoles were placed in 4 rooms in ~0.1 secs
-
-54 monopoles were placed in 4 rooms in ~8.5 mins
+53 monopoles were placed in 4 rooms in ~8.5 mins
